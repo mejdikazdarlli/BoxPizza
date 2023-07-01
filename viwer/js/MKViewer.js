@@ -131,17 +131,12 @@ export async function LoadModel(model, _thisScene,_thisRenderer) {
         var SceneGLB = object.scene;
         SceneGLB.name = String(model)
         SceneGLB.traverse(async function (child) {
-            if (child.isMesh)
+            if (child.isMesh && child.name==="controler")
             {
-                if(child.name.includes("Mask-val"))
-                {
-                    child.material.transparent = true
-                    child.material.opacity=0
-                }
-                if(child.name.includes('Mask-tex'))
-                {
-                    child.material.transparent = true
-                }
+               child.visible = false
+               child.children.forEach(function (grandChild) {
+                grandChild.visible = true;
+            });
             }
         })
         _thisScene.add(SceneGLB)
